@@ -23,6 +23,9 @@ const puppeteer = require('puppeteer');
 //   return result;
 // })();
 
+// let domains = process.argv[2];
+// console.log(domains);
+// return
 
 let getMetrica = async () => {
   const browser = await puppeteer.launch();
@@ -32,9 +35,9 @@ let getMetrica = async () => {
     height: 720,
     deviceScaleFactor: 1,
   });
-  let domains = ['mb4.ru'];
+  let domain = process.argv[2];
   let data = [];
-  for (var domain of domains){ // Проходимся в цикле по каждому товару
+  // for (var domain of domains){ // Проходимся в цикле по каждому товару
     await page.goto('https://'+domain);
     await page.screenshot({path: '../storage/web/screen/'+domain+'.jpeg', type: 'jpeg', quality: 60});    
     await page.goto('https://pro.metrica.guru/id?domains='+domain)
@@ -54,7 +57,7 @@ let getMetrica = async () => {
     }, domain);
 
   data.push(result);
-  }
+  // }
   browser.close();
   return data;
 }
