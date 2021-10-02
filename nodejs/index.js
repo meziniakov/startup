@@ -32,7 +32,7 @@ let getMetrica = async () => {
     height: 720,
     deviceScaleFactor: 1,
   });
-  let domains = ['kudago.com'];
+  let domains = ['mb4.ru'];
   let data = [];
   for (var domain of domains){ // Проходимся в цикле по каждому товару
     await page.goto('https://'+domain);
