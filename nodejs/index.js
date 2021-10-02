@@ -36,7 +36,7 @@ let getMetrica = async () => {
   let data = [];
   for (var domain of domains){ // Проходимся в цикле по каждому товару
     await page.goto('https://'+domain);
-    await page.screenshot({path: 'screen/'+domain+'.jpeg', type: 'jpeg', quality: 60});    
+    // await page.screenshot({path: 'screen/'+domain+'.jpeg', type: 'jpeg', quality: 60});    
     await page.goto('https://pro.metrica.guru/id?domains='+domain)
     await page.waitForSelector('.bar_value', {
       visible: true,

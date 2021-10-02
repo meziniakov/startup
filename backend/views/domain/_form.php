@@ -1,7 +1,9 @@
 <?php
 
+use trntv\filekit\widget\Upload;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\web\JsExpression;
 
 /**
  * @var yii\web\View $this
@@ -33,7 +35,15 @@ use yii\bootstrap4\ActiveForm;
                 <?php echo $form->field($model, 'index_Y')->textInput() ?>
                 <?php echo $form->field($model, 'index_G')->textInput() ?>
                 <?php echo $form->field($model, 'CMS')->textInput(['maxlength' => true]) ?>
-                
+                <?php echo $form->field($model, 'screen')->widget(
+                Upload::class,
+                [
+                    'url' => ['/source/screen/'],
+                    'maxFileSize' => 5000000, // 5 MiB,
+                    'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+                ]
+            ) ?>
+
             </div>
             <div class="card-footer">
                 <?php echo Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

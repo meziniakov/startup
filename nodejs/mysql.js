@@ -1,13 +1,5 @@
 const mysql = require("mysql2");
-
-
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  database: "yii2core",
-  password: "root"
-});
-
+let config = require("./config.js");
 // const data = ["example.com", '30%', '45%', '45000'];
 // const sql = "INSERT INTO domain(domain, direct, organica, traffic) VALUES(?, ?, ?, ?)";
  
@@ -16,6 +8,13 @@ const connection = mysql.createConnection({
 //     else console.log("Данные добавлены");
 // });
 
+// console.log(connection);
+connection = mysql.createConnection({
+  host: config.host,
+  user: config.user,
+  database: config.database,
+  password: config.pass
+});
 connection.connect(function(err){
   if (err) {
     return console.error("Ошибка: " + err.message);
