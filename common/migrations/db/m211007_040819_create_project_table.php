@@ -16,8 +16,10 @@ class m211007_040819_create_project_table extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(255)->unique()->notNull(),
             'keywords' => $this->string()->notNull(),
-            'user_id' => $this->integer(),
-            'created_at' => $this->integer()
+            'author_id' => $this->integer(3),
+            'updater_id' => $this->integer(3),
+            'created_at' => $this->integer(11),
+            'updated_at' => $this->integer(11),
         ]);
     }
 
