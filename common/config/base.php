@@ -4,7 +4,7 @@ $config = [
     'vendorPath' => __DIR__ . '/../../vendor',
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
     'sourceLanguage' => 'en-US',
-    'language' => 'en-US',
+    'language' => 'ru-RU',
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -124,7 +124,16 @@ $config = [
         'keyStorage' => [
             'class' => common\components\keyStorage\KeyStorage::class,
         ],
-
+        'queue' => [
+            // 'class' => yii\queue\file\Queue::class,
+            'class' => \yii\queue\db\Queue::class,
+            // 'path' => '@console/runtime/queue',
+            // 'as log' => \yii\queue\LogBehavior::class,
+            'db' => 'db',
+            'tableName' => '{{%queue}}', // Имя таблицы
+            'channel' => 'default', // Queue channel key
+            'mutex' => \yii\mutex\MysqlMutex::class, // Mutex used to sync queries
+        ],
         'urlManagerBackend' => \yii\helpers\ArrayHelper::merge(
             [
                 'hostInfo' => env('BACKEND_HOST_INFO'),
@@ -146,11 +155,9 @@ $config = [
             ],
             require(Yii::getAlias('@storage/config/_urlManager.php'))
         ),
-
-        'queue' => [
-            'class' => \yii\queue\file\Queue::class,
-            'path' => '@common/runtime/queue',
-        ],
+    ],
+    'bootstrap' => [
+        'queue', // Компонент регистрирует свои консольные команды
     ],
     'params' => [
         'adminEmail' => env('ADMIN_EMAIL'),

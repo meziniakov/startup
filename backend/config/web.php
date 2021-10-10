@@ -87,6 +87,9 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => yii\gii\Module::class,
         'generators' => [
+            'job' => [
+                'class' => \yii\queue\gii\Generator::class,
+            ],
             'crud' => [
                 'class' => yii\gii\generators\crud\Generator::class,
                 'templates' => [

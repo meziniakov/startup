@@ -4,9 +4,9 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'console\controllers',
     'controllerMap' => [
-        'command-bus' => [
-            'class' => trntv\bus\console\BackgroundBusController::class,
-        ],
+        // 'command-bus' => [
+        //     'class' => trntv\bus\console\BackgroundBusController::class,
+        // ],
         'message' => [
             'class' => console\controllers\ExtendedMessageController::class
         ],
