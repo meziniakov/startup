@@ -18,6 +18,7 @@ $keyStorage = Yii::$app->keyStorage;
 <!DOCTYPE html>
 <html lang="<?php echo Yii::$app->language ?>">
 <head>
+<style>tbody tr td img:hover {transform: scale(4)}</style>
     <meta charset="<?php echo Yii::$app->charset ?>">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 

@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
+                'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => '-'],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -44,15 +45,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     // 'id',
                     'domain',
-                    'traffic',
-                    'organic',
-                    'direct',
+                    'traffic:integer',
+                    'organic:percent',
+                    'direct:percent',
                     'traffic_season',
-                    'project_stage',
-                    'profit_await',
-                    'evaluate_min',
-                    'evaluate_middle',
-                    'evaluate_max',
+                    // 'project_stage',
+                    'profit_await:currency',
+                    'evaluate_min:currency',
+                    'evaluate_middle:currency',
+                    'evaluate_max:currency',
                     'domain_age',
                     'IKS',
                     'effectiveness',
@@ -67,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       'format' => 'html',
                       'filter' => false,
                       'content' => function ($model) {
-                          return Html::img(Yii::getAlias('@storageUrl').'/source/screen/' . $model['screen'], ['width' => '100px']);
+                          return Html::img(Yii::getAlias('@storageUrl').'/screen/' . $model['screen'], ['width' => '100px']);
                       }
                     ],
                     [
@@ -77,10 +78,25 @@ $this->params['breadcrumbs'][] = $this->title;
                       'format' => 'html',
                       'filter' => false,
                       'content' => function ($model) {
-                          return Html::img(Yii::getAlias('@storageUrl').'/source/screen/' . $model['chart'], ['width' => '100px']);
+                          return Html::img(Yii::getAlias('@storageUrl').'/chart/' . $model['chart'], ['width' => '100px']);
                       }
-                    ],          
-                    ['class' => \common\widgets\ActionColumn::class],
+                    ],
+                    // [
+                    //     'class' => 'yii\grid\ActionColumn',
+                    //     'template' => '{link}, {view} {update} {delete}',
+                    //     'buttons' => [
+                    //         'update' => function ($url,$model) {
+                    //             return Html::a(
+                    //             '<span class="glyphicon glyphicon-screenshot"></span>', 
+                    //             $url);
+                    //         },
+                    //         'link' => function ($url,$model,$key) {
+                    //             return Html::a('Действие', $url);
+                    //         },
+                    //     ],
+                    // ],
+                    ['class' => \common\widgets\ActionColumn::class,
+                    'template' => '{start} {delete}'],
                 ],
             ]); ?>
     

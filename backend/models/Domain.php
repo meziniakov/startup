@@ -86,6 +86,6 @@ class Domain extends \yii\db\ActiveRecord
      */
     public function getKeywordDomains()
     {
-        return $this->hasMany(KeywordDomain::className(), ['domain_id' => 'id']);
+        return $this->hasMany(KeywordDomain::class, ['domain_id' => 'id']);
     }
 }

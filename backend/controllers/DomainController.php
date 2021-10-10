@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use backend\jobs\MetricaJob;
 use Yii;
 use backend\models\Domain;
 use backend\models\search\DomainSearch;
+use Codeception\Lib\Di;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -53,6 +55,50 @@ class DomainController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    public function actionStart($id)
+    {
+        $model = $this->findModel($id);
+        if(Yii::$app->queue->push(new MetricaJob([
+            'id' => $id,
+        ]))) {
+            Yii::$app->session->setFlash('alert', [
+                'options' => ['class' => 'alert-success'],
+                'body' => 'Домен ' . $model->domain . ' номер '.$model->id.' отправлен в очередь на обработку. '
+            ]);    
+        } else {
+            Yii::$app->session->setFlash('alert', [
+                'options' => ['class' => 'alert-danger'],
+                'body' => 'Ошибка'
+            ]);    
+        }
+        // die;
+        // $js_path = '/var/www/yii2zif/startup/nodejs/metrica.js';
+        // $js_func = 'metrica.js ' . $model->domain;
+        // $node = '/snap/node/5322/bin/node';
+        // $out = null;
+        // // die("cd ".dirname($js_path)." && {$node} {$js_func} 2>&1");
+        // $res = exec("cd ".dirname($js_path)." && {$node} {$js_func} 2>&1", $out, $err);
+        // var_dump($res);die;
+        // if($err) {
+        //     Yii::$app->session->setFlash('alert', [
+        //     'options' => ['class' => 'alert-danger'],
+        //     'body' => "Произошла ошибка: " . $res
+        //     ]);
+        // } else {
+        //     Yii::$app->session->setFlash('alert', [
+        //         'options' => ['class' => 'alert-success'],
+        //         'body' => 'Домен ' . $model->domain . ' отправлен на парсинг. '
+        //     ]);
+        // }
+
+        return $this->redirect(['index']);
+
+        // return $result;
+        // return $this->render('start', [
+        //     'model' => $this->findModel($id),
+        // ]);
     }
 
     /**
