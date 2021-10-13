@@ -38,23 +38,27 @@ let getMetrica = async () => {
   let domain = process.argv[2];
   let data = [];
   // for (var domain of domains){ // Проходимся в цикле по каждому товару
-    await page.goto('https://'+domain);
-    await page.screenshot({path: '../storage/web/screen/'+domain+'.jpeg', type: 'jpeg', quality: 60});    
-    await page.goto('https://pro.metrica.guru/id?domains='+domain)
-    await page.waitForSelector('.bar_value', {
-      visible: true,
-    });
-
-    const result = await page.evaluate((domain) => {
-      let direct = document.querySelector('div.d-flex.w-100.wrap2.row.row-cols-3.row-cols-xs-3.row-cols-md-6').childNodes[0].children[0].innerText;
-      let organica = document.querySelector('div.d-flex.w-100.wrap2.row.row-cols-3.row-cols-xs-3.row-cols-md-6').childNodes[1].children[0].innerText;
-
-      return {
-        'Домен': domain,
-        '% c поиска': organica, 
-        'Прямые переходы': direct
-      }
-    }, domain);
+    // await page.goto('https://'+domain);
+    // await page.screenshot({path: '../storage/web/screen/'+domain+'.jpeg', type: 'jpeg', quality: 60});    
+    // await page.goto('https://pro.metrica.guru/id?domains='+domain)
+    // await page.waitForSelector('.bar_value', {
+    //   visible: true,
+    // });
+      const result = await page.evaluate((domain) => {
+        // let direct = document.querySelector('div.d-flex.w-100.wrap2.row.row-cols-3.row-cols-xs-3.row-cols-md-6').childNodes[0].children[0].innerText;
+        // let organica = document.querySelector('div.d-flex.w-100.wrap2.row.row-cols-3.row-cols-xs-3.row-cols-md-6').childNodes[1].children[0].innerText;
+        let direct = '33%';
+        let organic = '34%';
+        try {
+          return {
+            'Домен': domain,
+            '% c поиска': organic, 
+            'Прямые переходы': direct
+          }
+        } catch(error) {
+          console.log(error);
+        }
+      }, domain);
 
   data.push(result);
   // }
@@ -64,4 +68,6 @@ let getMetrica = async () => {
 
 getMetrica().then((value) => {
   console.log(value);
+  process.exit()
 });
+// process.exit()
