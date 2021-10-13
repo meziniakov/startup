@@ -21,7 +21,7 @@ class MetricaJob extends \yii\base\BaseObject implements \yii\queue\JobInterface
         $model = Domain::findOne($this->id);
         $model->traffic = 3000;
         // $model->save();
-        $js_path = '/var/www/yii2zif/startup/nodejs/metrica.js';
+        $js_path = __DIR__.'/nodejs/metrica.js';
         $js_func = 'metrica.js ' . $model->domain;
         $node = '/snap/node/5322/bin/node';
         $out = null;
