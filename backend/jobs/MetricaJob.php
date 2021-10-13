@@ -23,7 +23,8 @@ class MetricaJob extends \yii\base\BaseObject implements \yii\queue\JobInterface
         // $model->save();
         $js_path = __DIR__.'/../../nodejs/metrica.js';
         $js_func = 'metrica.js ' . $model->domain;
-        $node = '/snap/node/5322/bin/node';
+        // $node = '/snap/node/5322/bin/node';
+        $node = 'node';
         $out = null;
         // die("cd ".dirname($js_path)." && {$node} {$js_func} 2>&1");
         // $model->CMS = "cd ".dirname($js_path)." && {$node} {$js_func} 2>&1";
