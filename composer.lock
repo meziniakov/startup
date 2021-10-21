@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93f35f5d3da6d55852aa779fbe697c8d",
+    "content-hash": "eee4e4c90662275caf331b2c071b4b7a",
     "packages": [
         {
             "name": "alexantr/yii2-elfinder",
@@ -397,6 +397,51 @@
             "time": "2018-03-26T11:24:36+00:00"
         },
         {
+            "name": "creocoder/yii2-taggable",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/creocoder/yii2-taggable.git",
+                "reference": "d2c73df372a490ccc45dd064c52f3f022d62dde5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/creocoder/yii2-taggable/zipball/d2c73df372a490ccc45dd064c52f3f022d62dde5",
+                "reference": "d2c73df372a490ccc45dd064c52f3f022d62dde5",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "creocoder\\taggable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Kochetov",
+                    "email": "creocoder@gmail.com"
+                }
+            ],
+            "description": "The taggable behavior for the Yii framework",
+            "keywords": [
+                "Taggable",
+                "tags",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/creocoder/yii2-taggable/issues",
+                "source": "https://github.com/creocoder/yii2-taggable/tree/master"
+            },
+            "time": "2015-02-24T21:45:58+00:00"
+        },
+        {
             "name": "doctrine/annotations",
             "version": "1.13.2",
             "source": {
@@ -550,16 +595,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "c81f18a3efb941d8c4d2e025f6183b5c6d697307"
+                "reference": "ee0db30118f661fb166bcffbf5d82032df484697"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/c81f18a3efb941d8c4d2e025f6183b5c6d697307",
-                "reference": "c81f18a3efb941d8c4d2e025f6183b5c6d697307",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/ee0db30118f661fb166bcffbf5d82032df484697",
+                "reference": "ee0db30118f661fb166bcffbf5d82032df484697",
                 "shasum": ""
             },
             "require": {
@@ -606,7 +651,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/3.1.1"
+                "source": "https://github.com/egulias/EmailValidator/tree/3.1.2"
             },
             "funding": [
                 {
@@ -614,7 +659,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-01T18:37:14+00:00"
+            "time": "2021-10-11T09:18:27+00:00"
         },
         {
             "name": "electrolinux/phpquery",
@@ -622,12 +667,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/electrolinux/phpquery.git",
-                "reference": "a8d0be71117193dea2106743ce2dee4788b1eae5"
+                "reference": "cfe59d2bc47775124ba3fd90b6ac5632667aba80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/electrolinux/phpquery/zipball/a8d0be71117193dea2106743ce2dee4788b1eae5",
-                "reference": "a8d0be71117193dea2106743ce2dee4788b1eae5",
+                "url": "https://api.github.com/repos/electrolinux/phpquery/zipball/cfe59d2bc47775124ba3fd90b6ac5632667aba80",
+                "reference": "cfe59d2bc47775124ba3fd90b6ac5632667aba80",
                 "shasum": ""
             },
             "require": {
@@ -662,7 +707,7 @@
             "support": {
                 "source": "https://github.com/electrolinux/phpquery/tree/master"
             },
-            "time": "2019-03-01T10:04:37+00:00"
+            "time": "2021-10-09T10:03:13+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -2551,6 +2596,60 @@
                 "source": "https://github.com/kartik-v/yii2-widgets/tree/master"
             },
             "time": "2018-10-09T17:40:19+00:00"
+        },
+        {
+            "name": "la-haute-societe/yii2-save-relations-behavior",
+            "version": "1.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/la-haute-societe/yii2-save-relations-behavior.git",
+                "reference": "1fbe8d07430fddf58f44bdd554a181a4898d0f00"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/la-haute-societe/yii2-save-relations-behavior/zipball/1fbe8d07430fddf58f44bdd554a181a4898d0f00",
+                "reference": "1fbe8d07430fddf58f44bdd554a181a4898d0f00",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": ">=2.0.14"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.36"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "lhs\\Yii2SaveRelationsBehavior\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alban Jubert",
+                    "email": "alban@lahautesociete.com"
+                }
+            ],
+            "description": "Validate and save automatically related Active Record models.",
+            "keywords": [
+                "Behavior",
+                "active-query",
+                "active-record",
+                "database",
+                "extension",
+                "has-many",
+                "has-one",
+                "relations",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/la-haute-societe/yii2-save-relations-behavior/issues",
+                "source": "https://github.com/la-haute-societe/yii2-save-relations-behavior/tree/1.7.2"
+            },
+            "time": "2019-06-22T13:36:08+00:00"
         },
         {
             "name": "league/flysystem",
@@ -6153,25 +6252,24 @@
     "packages-dev": [
         {
             "name": "behat/gherkin",
-            "version": "v4.8.0",
+            "version": "v4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Gherkin.git",
-                "reference": "2391482cd003dfdc36b679b27e9f5326bd656acd"
+                "reference": "0bc8d1e30e96183e4f36db9dc79caead300beff4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/2391482cd003dfdc36b679b27e9f5326bd656acd",
-                "reference": "2391482cd003dfdc36b679b27e9f5326bd656acd",
+                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/0bc8d1e30e96183e4f36db9dc79caead300beff4",
+                "reference": "0bc8d1e30e96183e4f36db9dc79caead300beff4",
                 "shasum": ""
             },
             "require": {
                 "php": "~7.2|~8.0"
             },
             "require-dev": {
-                "cucumber/cucumber": "dev-gherkin-16.0.0",
+                "cucumber/cucumber": "dev-gherkin-22.0.0",
                 "phpunit/phpunit": "~8|~9",
-                "symfony/phpunit-bridge": "~3|~4|~5",
                 "symfony/yaml": "~3|~4|~5"
             },
             "suggest": {
@@ -6180,7 +6278,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.4-dev"
+                    "dev-master": "4.x-dev"
                 }
             },
             "autoload": {
@@ -6211,9 +6309,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Behat/Gherkin/issues",
-                "source": "https://github.com/Behat/Gherkin/tree/v4.8.0"
+                "source": "https://github.com/Behat/Gherkin/tree/v4.9.0"
             },
-            "time": "2021-02-04T12:44:21+00:00"
+            "time": "2021-10-12T13:05:09+00:00"
         },
         {
             "name": "codeception/codeception",
@@ -8150,6 +8248,7 @@
                 "issues": "https://github.com/sebastianbergmann/resource-operations/issues",
                 "source": "https://github.com/sebastianbergmann/resource-operations/tree/master"
             },
+            "abandoned": true,
             "time": "2015-07-28T20:34:47+00:00"
         },
         {
