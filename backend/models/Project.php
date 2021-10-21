@@ -1,8 +1,9 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
 use Codeception\Lib\Interfaces\ActiveRecord;
+use creocoder\taggable\TaggableBehavior;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\ClientException;
@@ -11,6 +12,7 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use GuzzleHttp\Psr7;
+use common\models\User;
 
 /**
  * This is the model class for table "project".
@@ -22,8 +24,7 @@ use GuzzleHttp\Psr7;
  * @property int|null $created_at
  */
 class Project extends \yii\db\ActiveRecord
-{
-
+{    
     public static $headers = [
         // 'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36',
         // 'User-Agent' => 'Mozilla/4.0 (compatible; MSIE 7.0; America Online Browser 1.1; rev1.2; Windows NT 5.1; SV1; .NET CLR 1.1.4322)',
@@ -74,6 +75,14 @@ class Project extends \yii\db\ActiveRecord
                 'createdByAttribute' => 'author_id',
                 'updatedByAttribute' => 'updater_id',
             ],
+            'taggable' => [
+                'class' => TaggableBehavior::class,
+                'tagValuesAsArray' => false,
+                // 'tagRelation' => 'tags',
+                'tagRelation' => 'domains',
+                'tagValueAttribute' => 'domain',
+                'tagFrequencyAttribute' => 'frequency',
+            ],
         ];
     }
 
@@ -91,8 +100,9 @@ class Project extends \yii\db\ActiveRecord
                     return date(DATE_ATOM);
                 }
             ],
+            ['tagValues', 'safe'],
             ['author_id', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['author_id' => 'id']],
-            [['name'], 'unique'],
+            // [['name'], 'unique'],
             [['created_at'], 'integer'],
         ];
     }
@@ -111,6 +121,24 @@ class Project extends \yii\db\ActiveRecord
             'updated_at' => 'Обновлено',
         ];
     }
+
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
+
+    public static function find()
+    {
+        return new ProjectQuery(get_called_class());
+    }
+
+    // public function getTags()
+    // {
+    //     return $this->hasMany(Tag::class, ['id' => 'tag_id'])
+    //         ->viaTable('{{%project_tag_assn}}', ['project_id' => 'id']);
+    // }
 
     public static function client($url, $subrequest = null, array$query = null)
     {
@@ -156,5 +184,17 @@ class Project extends \yii\db\ActiveRecord
       return $document;
       // var_dump($res);die;
     }
+
+    public function getDomains()
+    {
+        return $this->hasMany(Domain::class, ['id' => 'domain_id'])
+            ->viaTable('{{%domain_project}}', ['project_id' => 'id']);
+    }
+
+    // public function getTags()
+    // {
+    //     return $this->hasMany(Tag::class, ['id' => 'tag_id'])
+    //         ->viaTable('{{%project_tag_assn}}', ['project_id' => 'id']);
+    // }
 
 }

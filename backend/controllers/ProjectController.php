@@ -3,8 +3,9 @@
 namespace backend\controllers;
 
 use backend\models\Domain;
+use backend\models\Project;
+use backend\models\search\DomainsSearch;
 use Yii;
-use common\models\Project;
 use backend\models\search\ProjectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -57,72 +58,49 @@ class ProjectController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Project model.
-     * @param int $id ID
-     * @return mixed
-     */
-    public function actionStart($id)
+    public function actionPusk($id)
     {
         $project = $this->findModel($id);
-        $start = 0;
-        $domainCount = 0;
-        // for ($start=0; $start < 21; $start += 10) {
-        while ($start < 9) {
-            $doc = Project::client('https://www.google.ru/', 'search', [
-                'q' => $project->keywords,
-                'start' => $start,
-            ]);
-            $entry = $doc->find('div#main div.kCrYT');
-            $data['title'] = pq($entry)->text();
-            echo $data['title']; die;
-            // var_dump($entry);die;
-            // var_dump(pq($entry)->find('h1')->html());die;
-            foreach ($entry as $item) {
-                var_dump(pq($item)->find('a')->attr('href'));die;
-                // $domain = new Domain();
-                $domain = [];
-                $domain = parse_url(pq($item)->find('a')->attr('href'), PHP_URL_HOST);
-                var_dump($domain);die;
-                // $domain->save();
-                $domainCount++;
-            }
-            $start += 10;
+        $query = str_replace(" ", "+", $project->keywords);
+        $js_path = __DIR__.'/../../nodejs/metrica.js';
+        $js_func = 'google.js ' . $query .' 1';
+        $node = '/snap/node/5322/bin/node';
+        $res = shell_exec("cd " . dirname($js_path)." && {$node} {$js_func}");
+        die("cd " . dirname($js_path)." && {$node} {$js_func}");
+        $project->addTagValues($res);
+        if($project->validate() && $project->save()) {
+            Yii::$app->session->setFlash('alert', [
+                'options' => ['class' => 'alert-success'],
+                'body' => 'Успешно добавлено домены'
+            ]);    
+            return $this->redirect(['project/domains', 'id' => $id]);
+        } else {
+            Yii::$app->session->setFlash('alert', [
+                'options' => ['class' => 'alert-success'],
+                'body' => print_r($project->getErrors())
+            ]);    
+            return $this->redirect(['project/index']);
         }
-
-        Yii::$app->session->setFlash('alert', [
-            'options' => ['class' => 'alert-success'],
-            'body' => 'Добавлено ' . $domainCount . ' доменов'
-        ]);
-
-        // return $this->render('index', [
-        //     'model' => $this->findModel($id),
-        // ]);
+        // die;
+        // $projects = Project::find()->with('domains')->all();
+        // foreach ($projects as $project) {
+        //     print_r($project->domains);
+        // }
+        // // var_dump($domains);
     }
 
-    /**
-     * Creates a new Project model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
         $model = new Project();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Updates an existing Project model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return mixed
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);

@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\jobs\MetricaJob;
 use Yii;
 use backend\models\Domain;
+use backend\models\search\BlackList;
 use backend\models\search\DomainSearch;
 use Codeception\Lib\Di;
 use yii\web\Controller;
@@ -34,10 +35,11 @@ class DomainController extends Controller
      * Lists all Domain models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+        $currentUserId = Yii::$app->user->getId();
         $searchModel = new DomainSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $currentUserId, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -93,13 +95,35 @@ class DomainController extends Controller
         //     ]);
         // }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'id' => $id]);
 
         // return $result;
         // return $this->render('start', [
         //     'model' => $this->findModel($id),
         // ]);
     }
+
+    public function actionMultipleChangeStatus()
+    {
+        if (Yii::$app->request->post('id','blacklist')) {
+            Domain::updateAll(['blacklist' => Yii::$app->request->post('blacklist')], ['id' => Yii::$app->request->post('id')]);
+        }
+        Yii::$app->session->setFlash('success', 'Успешно изменено');
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+
+    public function actionBlacklist()
+    {
+        $searchModel = new BlackList();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 
     /**
      * Creates a new Domain model.

@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap4\ButtonDropdown;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -16,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card">
         <div class="card-header">
             <?php echo Html::a('Create Domain', ['create'], ['class' => 'btn btn-success']) ?>
-        </div>
+  <?= Html::a(Yii::t('backend', 'Black list'), ['blacklist'], ['class' => 'btn btn-danger']) ?>
+</div>
 
         <div class="card-body p-0">
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

@@ -42,17 +42,21 @@ function chunk(arr, size) {
   return result;
 }
 
-const scrapingExample = async (_req) => {
+let scrapingExample = async () => {
   let { browser, page } = await openConnection();
-  let query = process.argv[2];
-  let count = process.argv[3];
+  let query = process.argv[2]; // запрос соединяя +
+  let count = process.argv[3]; // количество страниц от 1 до 10
   let data = [];
 
-  for(start = 0; start <= count*10; start=start+10){
+  for(start = 0; start < count*10; start=start+10){
     await page.goto('https://google.ru/search?q='+query+'&start='+start, { waitUntil: 'domcontentloaded' });
-    const domains = await page.evaluate(() =>
+    const domains = await page.evaluate(() => 
+    //   let el = document.querySelector('cite').firstChild.textContent + ' ,';
+    //   return el;
+    // });
       Array.from(document.querySelectorAll('cite')).map(el => el.firstChild.textContent)
     );
+    // data = domains;
 
     domains.forEach((element) => {
       if (!data.includes(element)) {
@@ -61,12 +65,18 @@ const scrapingExample = async (_req) => {
     });
   }
   await closeConnection(page, browser);
-  const sql = "INSERT IGNORE INTO domain (domain) VALUES ?";
+  
+  let result = data.join(', ');
+  console.log(result);
+  process.exit();
+  // return result;
+  // return data;
+  // const sql = "INSERT IGNORE INTO domain (domain) VALUES ?";
 
-  pool.query(sql, [chunk(data, 1)], function (err) {
-    if (err) throw err;
-    console.log('Данные добавлены');
-    process.exit();
-  });
+  // pool.query(sql, [chunk(data, 1)], function (err) {
+  //   if (err) throw err;
+  //   console.log('Данные добавлены');
+  //   process.exit();
+  // });
 };
 scrapingExample();

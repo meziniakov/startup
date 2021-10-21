@@ -10,7 +10,7 @@ use backend\models\Domain;
 /**
  * DomainSearch represents the model behind the search form about `backend\models\Domain`.
  */
-class DomainSearch extends Domain
+class BlackList extends Domain
 {
     /**
      * @inheritdoc
@@ -39,9 +39,9 @@ class DomainSearch extends Domain
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $currentUserId, $project_id)
+    public function search($params)
     {
-        $query = Domain::find()->joinWith('projects')->where(['domain_project.project_id' => $project_id])->andWhere(['author_id' => $currentUserId])->andWhere(['blacklist' => 0]);
+        $query = Domain::find()->where(['blacklist' => 1]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

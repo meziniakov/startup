@@ -95,7 +95,6 @@ $config = [
                     ],
                     'on missingTranslation' => [backend\modules\translation\Module::class, 'missingTranslation'],
                 ],
-                /* Uncomment this code to use DbMessageSource
                 '*'=> [
                     'class' => yii\i18n\DbMessageSource::class,
                     'sourceMessageTable'=>'{{%i18n_source_message}}',
@@ -104,7 +103,6 @@ $config = [
                     'cachingDuration' => 3600,
                     'on missingTranslation' => [backend\modules\translation\Module::class, 'missingTranslation']
                 ],
-                */
             ],
         ],
 

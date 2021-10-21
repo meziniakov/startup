@@ -28,6 +28,7 @@ class ActionColumn extends \yii\grid\ActionColumn
     protected function initDefaultButtons()
     {
         $this->initDefaultButton('start', 'crosshairs');
+        $this->initDefaultButton('pusk', 'crosshairs');
         $this->initDefaultButton('view', 'eye');
         $this->initDefaultButton('update', 'edit');
         $this->initDefaultButton('delete', 'trash', [
@@ -50,6 +51,12 @@ class ActionColumn extends \yii\grid\ActionColumn
                 switch ($name) {
                     case 'start':
                         $title = Yii::t('yii', 'Start');
+                        $defaultOptions = [
+                            'class' => ['btn', 'btn-info', 'btn-xs'],
+                        ];
+                        break;
+                    case 'pusk':
+                        $title = Yii::t('yii', 'Pusk');
                         $defaultOptions = [
                             'class' => ['btn', 'btn-info', 'btn-xs'],
                         ];

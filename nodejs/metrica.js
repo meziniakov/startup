@@ -57,13 +57,12 @@ let getMetrica = async () => {
     // return console.log(result);
 
     // const sql = "INSERT INTO domain(domain, traffic, organic, direct, screen, chart) VALUES(?, ?, ?, ?, ?, ?)";
-    const sql = "UPDATE domain SET domain=?, traffic=?, organic=?, direct=?, traffic_season=?, profit_await=?, evaluate_min=?, evaluate_middle=?, evaluate_max=?, domain_age=?, IKS=?, effectiveness=?, articles_num=?, index_Y=?, index_G=?, screen=?, chart=? WHERE domain='"+domain+"'";
-    pool.query(sql, result, function (error) {
-      if (error) throw error;
-      console.log('Данные добавлены');
-      process.exit();
-    });
-
+      const sql = "UPDATE domain SET domain=?, traffic=?, organic=?, direct=?, traffic_season=?, profit_await=?, evaluate_min=?, evaluate_middle=?, evaluate_max=?, domain_age=?, IKS=?, effectiveness=?, articles_num=?, index_Y=?, index_G=?, screen=?, chart=? WHERE domain='"+domain+"'";
+      pool.query(sql, result, function (error) {
+        if (error) throw error;
+        console.log('Данные добавлены');
+        process.exit();
+      });
     } catch(error) {
       console.log(error);
     }

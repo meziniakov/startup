@@ -1,7 +1,10 @@
 <?php
 
+use backend\models\Domain;
+use backend\models\Project;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /**
  * @var yii\web\View $this
@@ -9,7 +12,7 @@ use yii\grid\GridView;
  * @var yii\data\ActiveDataProvider $dataProvider
  */
 
-$this->title = 'Projects';
+$this->title = 'Проекты';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-index">
@@ -19,8 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="card-body p-0">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    
+            <?php // echo $this->render('_search', ['model' => $searchModel]); 
+            ?>
+
             <?php echo GridView::widget([
                 'layout' => "{items}\n{pager}",
                 'options' => [
@@ -41,16 +45,71 @@ $this->params['breadcrumbs'][] = $this->title;
                                             $(this).parent().parent().toggleClass("danger");'
                             ];
                         }
-                      ],  
-                    'name',
+                    ],
+                    [
+                        'attribute' => 'name',
+                        'value' => function (Project $data) {
+                            return Html::a(Html::encode($data->name), Url::to(['domain/index', 'id' => $data->id]));
+                        },
+                        'format' => 'raw',
+                        'headerOptions' => ['width' => 400],
+                    ],
                     'keywords',
                     'created_at:datetime',
                     'updated_at:datetime',
-                    ['class' => \common\widgets\ActionColumn::class,
-                    'template' => '{start} {delete}'],
+                    [
+                        'class' => \common\widgets\ActionColumn::class,
+                        'template' => '{update} {pusk} {delete}'
+                    ],
                 ],
             ]); ?>
-    
+            <?php
+            $this->registerJs(
+                '
+          $(document).ready(function(){
+            $(\'#ToParsed\').click(function(){
+              var id = $(\'#grid\').yiiGridView(\'getSelectedRows\');
+              $.ajax({
+                  type: \'POST\',
+                  url : \'/place/multiple-change-status\',
+                  data : {id: id, status: 1},
+                  success : function() {
+                    $(this).closest(\'tr\').remove(); //удаление строки
+                  }
+              });
+            });
+            $(\'#ToEdited\').click(function(){
+              var id = $(\'#grid\').yiiGridView(\'getSelectedRows\');
+              $.ajax({
+                  type: \'POST\',
+                  url : \'/place/multiple-change-status\',
+                  data : {id: id, status: 2},
+                  success : function() {
+                    $(this).closest(\'tr\').remove(); //удаление строки
+                  }
+              });
+            });
+          });',
+                \yii\web\View::POS_READY
+            );
+            ?>
+            <?php
+            $this->registerJs('
+        $(document).ready(function(){
+        $(\'#ChangeStatus\').click(function(){
+            var id = $(\'#grid\').yiiGridView(\'getSelectedRows\');
+            $.ajax({
+                type: \'POST\',
+                url : \'/place/multiple-change-status\',
+                data : {id: id},
+                success : function() {
+                $(this).closest(\'tr\').remove(); //удаление строки
+                }
+            });
+        });
+        });', \yii\web\View::POS_READY);
+            ?>
+
         </div>
         <div class="card-footer">
             <?php echo getDataProviderSummary($dataProvider) ?>

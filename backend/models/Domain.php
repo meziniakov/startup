@@ -88,4 +88,15 @@ class Domain extends \yii\db\ActiveRecord
     {
         return $this->hasMany(KeywordDomain::class, ['domain_id' => 'id']);
     }
+
+    public function getProjects()
+    {
+        return $this->hasMany(Project::class, ['id' => 'project_id'])
+            ->viaTable('{{%domain_project}}', ['domain_id' => 'id']);
+    }
+
+    // public function getReviews()
+    // {
+    //     return $this->hasMany(Review::className(), ['id' => 'review_id']);
+    // }
 }

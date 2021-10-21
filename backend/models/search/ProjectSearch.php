@@ -5,8 +5,7 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Project;
-
+use backend\models\Project;
 /**
  * ProjectSearch represents the model behind the search form about `common\models\Project`.
  */
