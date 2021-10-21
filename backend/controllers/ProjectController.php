@@ -74,7 +74,7 @@ class ProjectController extends Controller
                 'options' => ['class' => 'alert-success'],
                 'body' => 'Успешно добавлено домены'
             ]);    
-            return $this->redirect(['project/domains', 'id' => $id]);
+            return $this->redirect(['domain/index', 'id' => $id]);
         } else {
             Yii::$app->session->setFlash('alert', [
                 'options' => ['class' => 'alert-success'],
