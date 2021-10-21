@@ -66,7 +66,7 @@ class ProjectController extends Controller
         $js_func = 'google.js ' . $query .' 1';
         $node = '/snap/node/5322/bin/node';
         $res = shell_exec("cd " . dirname($js_path)." && {$node} {$js_func}");
-        die("cd " . dirname($js_path)." && {$node} {$js_func}");
+        // die("cd " . dirname($js_path)." && {$node} {$js_func}");
         $project->addTagValues($res);
         if($project->validate() && $project->save()) {
             Yii::$app->session->setFlash('alert', [
