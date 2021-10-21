@@ -59,7 +59,7 @@ class DomainController extends Controller
         ]);
     }
 
-    public function actionStart($id)
+    public function actionStartAjax($id)
     {
         $model = $this->findModel($id);
         if(Yii::$app->queue->push(new MetricaJob([
@@ -68,12 +68,12 @@ class DomainController extends Controller
             Yii::$app->session->setFlash('alert', [
                 'options' => ['class' => 'alert-success'],
                 'body' => 'Домен ' . $model->domain . ' номер '.$model->id.' отправлен в очередь на обработку. '
-            ]);    
+            ]);
         } else {
             Yii::$app->session->setFlash('alert', [
                 'options' => ['class' => 'alert-danger'],
                 'body' => 'Ошибка'
-            ]);    
+            ]); 
         }
         // die;
         // $js_path = '/var/www/yii2zif/startup/nodejs/metrica.js';
@@ -95,7 +95,6 @@ class DomainController extends Controller
         //     ]);
         // }
 
-        return $this->redirect(['index', 'id' => $id]);
 
         // return $result;
         // return $this->render('start', [
