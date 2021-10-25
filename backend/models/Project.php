@@ -61,6 +61,9 @@ class Project extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+    public $total;
+
     public static function tableName()
     {
         return 'project';
@@ -93,7 +96,7 @@ class Project extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'keywords'], 'required'],
-            [['author_id', 'created_at', 'updated_at'], 'integer'],
+            [['author_id', 'created_at', 'updated_at', 'total'], 'integer'],
             [['name', 'keywords'], 'string', 'max' => 255],
             ['updated_at', 'default',
                 'value' => function () {
@@ -119,6 +122,7 @@ class Project extends \yii\db\ActiveRecord
             'author_id' => 'User ID',
             'created_at' => 'Создано',
             'updated_at' => 'Обновлено',
+            'total' => 'Количество страниц выдачи'
         ];
     }
 

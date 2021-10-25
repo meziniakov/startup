@@ -18,6 +18,7 @@ use yii\bootstrap4\ActiveForm;
 
                 <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
+                <?php echo $form->field($model, 'total')->textInput(['maxlength' => true]) ?>
                 <?php // $form->field($model, 'author_id')->textInput() ?>
                 <?php // $form->field($model, 'created_at')->textInput() ?>
                 

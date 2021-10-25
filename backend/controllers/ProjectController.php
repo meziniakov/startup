@@ -63,7 +63,7 @@ class ProjectController extends Controller
         $project = $this->findModel($id);
         $query = str_replace(" ", "+", $project->keywords);
         $js_path = __DIR__.'/../../nodejs/metrica.js';
-        $js_func = 'google.js ' . $query .' 1';
+        $js_func = 'google.js ' . $query .' '. $project->total;
         // $node = '/snap/node/5322/bin/node';
         $node = 'node';
         $res = shell_exec("cd " . dirname($js_path)." && {$node} {$js_func}");

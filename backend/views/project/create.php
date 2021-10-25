@@ -5,8 +5,8 @@
  * @var common\models\Project $model
  */
 
-$this->title = 'Create Project';
-$this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['index']];
+$this->title = 'Создать проект';
+$this->params['breadcrumbs'][] = ['label' => 'Проекты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-create">
