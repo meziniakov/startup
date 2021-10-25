@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'keywords',
                     'user_id',
                     'created_at',
-                    
+                    'total'
                 ],
             ]) ?>
         </div>

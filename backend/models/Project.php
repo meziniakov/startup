@@ -62,8 +62,6 @@ class Project extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
 
-    public $total;
-
     public static function tableName()
     {
         return 'project';
