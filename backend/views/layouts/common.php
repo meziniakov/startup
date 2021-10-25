@@ -228,10 +228,10 @@ $logEntries[] = [
                             'active' => Yii::$app->controller->id === 'project',
                         ],
                         [
-                            'label' => Yii::t('backend', 'Домены'),
-                            'url' => ['/domain'],
+                            'label' => Yii::t('backend', 'Черный список'),
+                            'url' => ['/domain/blacklist'],
                             'icon' => FAS::icon('thumbtack', ['class' => ['nav-icon']]),
-                            'active' => Yii::$app->controller->id === 'domain',
+                            'active' => Yii::$app->controller->action->id === 'blacklist',
                         ],
                         [
                             'label' => Yii::t('backend', 'Content'),

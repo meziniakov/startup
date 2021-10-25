@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\jobs\MetricaJob;
 use Yii;
 use backend\models\Domain;
+use backend\models\Project;
 use backend\models\search\BlackList;
 use backend\models\search\DomainSearch;
 use Codeception\Lib\Di;
@@ -37,6 +38,8 @@ class DomainController extends Controller
      */
     public function actionIndex($id)
     {
+        $project = Project::findOne($id);
+        $this->view->title = $project->name . " / Домены";
         $currentUserId = Yii::$app->user->getId();
         $searchModel = new DomainSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $currentUserId, $id);
@@ -59,8 +62,44 @@ class DomainController extends Controller
         ]);
     }
 
-    public function actionStartAjax($id)
+    public function actionStart($id)
     {
+        // $model = Domain::findOne($id);
+        // $js_path = __DIR__.'/../../nodejs/be1.js';
+        // $js_func = 'be1.js ' . parse_url($model->domain, PHP_URL_HOST);
+        // // die($js_func);
+        // $node = '/snap/node/5322/bin/node';
+        // // $node = 'node';
+        // $res = json_decode(exec("cd " . dirname($js_path)." && {$node} {$js_func}"));
+        // // $json = '{"domain":"blogstroykin.com","traffic":"","organic":"","direct":"","traffic_season":"","project_stage":10,"profit_await":"15","evaluate_min":"75","evaluate_middle":"113","evaluate_max":"150","domain_age":"2 года 57 дней","IKS":20,"index_Y":"2132","index_G":"2630","megaindexTrustRank":"5","megaindexDomainRank":"0"}';
+        // // $res = json_decode($json);
+        // $model->traffic = $res->traffic ? $res->traffic : '';
+        // $model->organic = $res->organic ? $res->organic : '';
+        // $model->direct = $res->direct ? $res->direct : '';
+        // $model->traffic_season = $res->traffic_season ? $res->traffic_season : '';
+        // $model->project_stage = $res->project_stage ? $res->project_stage : '';
+        // $model->profit_await = $res->profit_await ? $res->profit_await : '';
+        // $model->evaluate_min = $res->evaluate_min ? $res->evaluate_min : '';
+        // $model->evaluate_middle = $res->evaluate_middle ? $res->evaluate_middle : '';
+        // $model->evaluate_max = $res->evaluate_max ? $res->evaluate_max : '';
+        // $model->domain_age = $res->domain_age ? $res->domain_age : '';
+        // $model->index_Y = $res->index_Y ? $res->index_Y : '';
+        // $model->index_G = $res->index_G ? $res->index_G : '';
+        // $model->CMS = "";
+        // if($model->save()) {
+        //     Yii::$app->session->setFlash('alert', [
+        //         'options' => ['class' => 'alert-success'],
+        //         'body' => 'Домен ' . $model->domain . ' номер '.$model->id.' отправлен в очередь на обработку. '
+        //     ]);
+        //     return $this->redirect(['domain/view', 'id' => $id]);
+        // } else {
+        //     Yii::$app->session->setFlash('alert', [
+        //         'options' => ['class' => 'alert-danger'],
+        //         'body' => 'Ошибка'
+        //     ]);
+        //     echo "<pre>";
+        //     print_r($model->getErrors());
+        // }
         $model = $this->findModel($id);
         if(Yii::$app->queue->push(new MetricaJob([
             'id' => $id,
@@ -69,43 +108,29 @@ class DomainController extends Controller
                 'options' => ['class' => 'alert-success'],
                 'body' => 'Домен ' . $model->domain . ' номер '.$model->id.' отправлен в очередь на обработку. '
             ]);
+            // exec('cd ' . __DIR__.'/../../console' . ' && ./yii queue/run');
+            return $this->redirect(Yii::$app->request->referrer);
         } else {
             Yii::$app->session->setFlash('alert', [
                 'options' => ['class' => 'alert-danger'],
                 'body' => 'Ошибка'
-            ]); 
+            ]);
         }
-        // die;
-        // $js_path = '/var/www/yii2zif/startup/nodejs/metrica.js';
-        // $js_func = 'metrica.js ' . $model->domain;
-        // $node = '/snap/node/5322/bin/node';
-        // $out = null;
-        // // die("cd ".dirname($js_path)." && {$node} {$js_func} 2>&1");
-        // $res = exec("cd ".dirname($js_path)." && {$node} {$js_func} 2>&1", $out, $err);
-        // var_dump($res);die;
-        // if($err) {
-        //     Yii::$app->session->setFlash('alert', [
-        //     'options' => ['class' => 'alert-danger'],
-        //     'body' => "Произошла ошибка: " . $res
-        //     ]);
-        // } else {
-        //     Yii::$app->session->setFlash('alert', [
-        //         'options' => ['class' => 'alert-success'],
-        //         'body' => 'Домен ' . $model->domain . ' отправлен на парсинг. '
-        //     ]);
-        // }
-
-
-        // return $result;
-        // return $this->render('start', [
-        //     'model' => $this->findModel($id),
-        // ]);
     }
 
-    public function actionMultipleChangeStatus()
+    public function actionMultipleBlacklist()
     {
-        if (Yii::$app->request->post('id','blacklist')) {
-            Domain::updateAll(['blacklist' => Yii::$app->request->post('blacklist')], ['id' => Yii::$app->request->post('id')]);
+        if (Yii::$app->request->post('id')) {
+            Domain::updateAll(['blacklist' => 1], ['id' => Yii::$app->request->post('id')]);
+        }
+        Yii::$app->session->setFlash('success', 'Успешно изменено');
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionMultipleUnblacklist()
+    {
+        if (Yii::$app->request->post('id')) {
+            Domain::updateAll(['blacklist' => 0], ['id' => Yii::$app->request->post('id')]);
         }
         Yii::$app->session->setFlash('success', 'Успешно изменено');
         return $this->redirect(Yii::$app->request->referrer);
@@ -114,6 +139,7 @@ class DomainController extends Controller
 
     public function actionBlacklist()
     {
+        $this->view->title = "Черный список";
         $searchModel = new BlackList();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

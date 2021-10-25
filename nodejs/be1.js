@@ -2,17 +2,44 @@
 var captchaAPI = require("./config.js");
 const puppeteer = require('puppeteer-extra');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
-puppeteer.use(
-  RecaptchaPlugin({
-    provider: {
-      id: '2captcha',
-      token: captchaAPI // REPLACE THIS WITH YOUR OWN 2CAPTCHA API KEY ⚡
-    },
-    visualFeedback: true // colorize reCAPTCHAs (violet = detected, green = solved)
-  })
-)
 
-let getMetrica = async () => {
+// puppeteer.use(
+//   RecaptchaPlugin({
+//     provider: {
+//       id: '2captcha',
+//       token: captchaAPI // REPLACE THIS WITH YOUR OWN 2CAPTCHA API KEY ⚡
+//     },
+//     visualFeedback: true // colorize reCAPTCHAs (violet = detected, green = solved)
+//   })
+// )
+
+let megaindex = async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
+  await page.setViewport({
+    width: 1280,
+    height: 720,
+    deviceScaleFactor: 1,
+  });
+  let domain = process.argv[2];
+  await page.goto('https://ru.megaindex.com/info/'+domain, { waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('#serp', {visible: true,});
+  const parse = page.evaluate((domain) => {
+    let traffic = document.querySelector('#serp div:nth-child(1) font');
+    if(traffic) {
+      traffic = (traffic.innerText.indexOf("K") > -1) ? Number.parseFloat(traffic.innerText.replace(/\s/g, 'K'))*1000 : Number.parseFloat(traffic.innerText);
+    } else {
+      traffic = '';
+    }
+    return traffic
+  }, (domain));
+  await browser.close();
+}
+megaindex().then((value) => {
+});
+
+let getBe1 = async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
@@ -35,14 +62,41 @@ let getMetrica = async () => {
     await page.waitForSelector('#similar_attendance', {visible: true,});
     await page.waitForSelector('#set_pages_in_google', {visible: true,});
     await page.waitForSelector('#similar_source', {visible: true,});
+    await page.waitForSelector('#set_iks', {visible: true,});
     await page.waitForSelector('#set_trust_rank', {visible: true,});
     await page.waitForSelector('#set_domain_rank', {visible: true,});
     // const element = await page.$('.wrapper_line_chart');        // объявляем переменную с ElementHandle
     // await element.screenshot({path: chart_path+domain+'_chart.jpeg', type: 'jpeg', quality: 80});
 
-    const result = await page.evaluate((domain) => {
+    const be1 = await page.evaluate((domain) => {
       let traffic = document.querySelector('#similar_attendance text:nth-child(2)');
       traffic = traffic ? Number.parseInt(traffic.textContent.replace(/\s/g, '')) : '';
+      
+      if(traffic === '') {
+        let megaindex = async () => {
+          const browser = await puppeteer.launch();
+          const page = await browser.newPage();
+          await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
+          await page.setViewport({
+            width: 1280,
+            height: 720,
+            deviceScaleFactor: 1,
+          });
+          page.goto('https://ru.megaindex.com/info/'+domain, { waitUntil: 'domcontentloaded' });
+          page.waitForSelector('#serp', {visible: true,});
+          const parse = page.evaluate((domain) => {
+            let traffic = document.querySelector('#serp div:nth-child(1) font');
+            if(traffic) {
+              traffic = (traffic.innerText.indexOf("K") > -1) ? Number.parseFloat(traffic.innerText.replace(/\s/g, 'K'))*1000 : Number.parseFloat(traffic.innerText);
+            } else {
+              traffic = '';
+            }
+            return traffic
+          }, (domain));
+          browser.close();
+        }
+      traffic = megaindex();
+      }
 
       let direct = document.querySelector('#similar_source > div > div:nth-child(1) > div > svg > g:nth-child(4) > text');
       direct = direct ? Number.parseInt(direct.textContent.replace(/\s/g, '%'))/100 : '';
@@ -52,10 +106,10 @@ let getMetrica = async () => {
 
       let traffic_season = (traffic !== '') ? (traffic*0.9).toFixed(0) : '';
       let project_stage = 10;
-      let profit_await = (traffic_season*organic*0.3+(100-organic)*0.3/2).toFixed(0);
-      let evaluate_min = (project_stage*profit_await*0.5).toFixed(0);
-      let evaluate_middle = (project_stage*profit_await*0.75).toFixed(0);
-      let evaluate_max = (project_stage*profit_await).toFixed(0);
+      let profit_await = (traffic_season === '' || organic === '') ? '' : (traffic_season*organic*0.3+(100-organic)*0.3/2).toFixed(0);
+      let evaluate_min = profit_await === '' ? '' : (project_stage*profit_await*0.5).toFixed(0);
+      let evaluate_middle = profit_await === '' ? '' : (project_stage*profit_await*0.75).toFixed(0);
+      let evaluate_max = profit_await === '' ? '' : (project_stage*profit_await).toFixed(0);
 
       let domain_age = document.querySelector('#set_vozrast');
       domain_age = domain_age ? domain_age.textContent : '';
@@ -100,7 +154,7 @@ let getMetrica = async () => {
       }
     }, (domain));
     browser.close();
-    console.log(JSON.stringify(result));
+    console.log(JSON.stringify(be1));
     process.exit();
     } catch(error) {
       console.log(error);
@@ -109,5 +163,5 @@ let getMetrica = async () => {
   // }
 }
 
-getMetrica().then((value) => {
-});
+// getBe1().then((value) => {
+// });
