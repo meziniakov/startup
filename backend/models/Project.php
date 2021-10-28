@@ -78,11 +78,10 @@ class Project extends \yii\db\ActiveRecord
             ],
             'taggable' => [
                 'class' => TaggableBehavior::class,
-                'tagValuesAsArray' => false,
-                // 'tagRelation' => 'tags',
+                // 'tagValuesAsArray' => false,
                 'tagRelation' => 'domains',
                 'tagValueAttribute' => 'domain',
-                'tagFrequencyAttribute' => 'frequency',
+                // 'tagFrequencyAttribute' => 'frequency',
             ],
         ];
     }
@@ -135,13 +134,7 @@ class Project extends \yii\db\ActiveRecord
     {
         return new ProjectQuery(get_called_class());
     }
-
-    // public function getTags()
-    // {
-    //     return $this->hasMany(Tag::class, ['id' => 'tag_id'])
-    //         ->viaTable('{{%project_tag_assn}}', ['project_id' => 'id']);
-    // }
-
+    
     public static function client($url, $subrequest = null, array$query = null)
     {
       // print_r(self::$proxy);die;
@@ -192,11 +185,4 @@ class Project extends \yii\db\ActiveRecord
         return $this->hasMany(Domain::class, ['id' => 'domain_id'])
             ->viaTable('{{%domain_project}}', ['project_id' => 'id']);
     }
-
-    // public function getTags()
-    // {
-    //     return $this->hasMany(Tag::class, ['id' => 'tag_id'])
-    //         ->viaTable('{{%project_tag_assn}}', ['project_id' => 'id']);
-    // }
-
 }

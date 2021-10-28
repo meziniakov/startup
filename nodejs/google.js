@@ -66,7 +66,7 @@ let scrapingExample = async () => {
   }
   await closeConnection(page, browser);
   
-  let result = data.join(', ');
+  let result = data.join();
   console.log(result);
   process.exit();
   // return result;
