@@ -68,7 +68,8 @@ class ProjectController extends Controller
         $node = 'node';
         // die("cd " . dirname($js_path)." && {$node} {$js_func}");
         $res = shell_exec("cd " . dirname($js_path)." && {$node} {$js_func}");
-        var_dump(trim($res)); die;
+        // var_dump(trim($res)); die;
+        // $res = "YouTube,https://novamett.ru,https://www.youtube.com,https://besedkis.ru,http://строительство-отделка-ремонт.рф,http://landshaftdizajn.ru,https://homius.ru,https://mojdominfo.ru,https://bouw.ru,https://kakpravilnosdelat.ru,https://stroychik.ru,http://sdelajrukami.ru,https://stroim-dom.net,https://sam-stroitel.com,https://www.sdvor.com,https://house812.ru,https://www.pinterest.ru";
         $project->addTagValues(trim($res));
         if($project->validate() && $project->save()) {
             Yii::$app->session->setFlash('alert', [
