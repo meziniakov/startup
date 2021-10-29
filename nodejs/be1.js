@@ -72,31 +72,31 @@ let getBe1 = async () => {
       let traffic = document.querySelector('#similar_attendance text:nth-child(2)');
       traffic = traffic ? Number.parseInt(traffic.textContent.replace(/\s/g, '')) : '';
       
-      if(traffic === '') {
-        let megaindex = async () => {
-          const browser = await puppeteer.launch();
-          const page = await browser.newPage();
-          await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
-          await page.setViewport({
-            width: 1280,
-            height: 720,
-            deviceScaleFactor: 1,
-          });
-          page.goto('https://ru.megaindex.com/info/'+domain, { waitUntil: 'domcontentloaded' });
-          page.waitForSelector('#serp', {visible: true,});
-          const parse = page.evaluate((domain) => {
-            let traffic = document.querySelector('#serp div:nth-child(1) font');
-            if(traffic) {
-              traffic = (traffic.innerText.indexOf("K") > -1) ? Number.parseFloat(traffic.innerText.replace(/\s/g, 'K'))*1000 : Number.parseFloat(traffic.innerText);
-            } else {
-              traffic = '';
-            }
-            return traffic
-          }, (domain));
-          browser.close();
-        }
-      traffic = megaindex();
-      }
+      // if(traffic === '') {
+      //   let megaindex = async () => {
+      //     const browser = await puppeteer.launch();
+      //     const page = await browser.newPage();
+      //     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
+      //     await page.setViewport({
+      //       width: 1280,
+      //       height: 720,
+      //       deviceScaleFactor: 1,
+      //     });
+      //     page.goto('https://ru.megaindex.com/info/'+domain, { waitUntil: 'domcontentloaded' });
+      //     page.waitForSelector('#serp', {visible: true,});
+      //     const parse = page.evaluate((domain) => {
+      //       let traffic = document.querySelector('#serp div:nth-child(1) font');
+      //       if(traffic) {
+      //         traffic = (traffic.innerText.indexOf("K") > -1) ? Number.parseFloat(traffic.innerText.replace(/\s/g, 'K'))*1000 : Number.parseFloat(traffic.innerText);
+      //       } else {
+      //         traffic = '';
+      //       }
+      //       return traffic
+      //     }, (domain));
+      //     browser.close();
+      //   }
+      // traffic = megaindex();
+      // }
 
       let direct = document.querySelector('#similar_source > div > div:nth-child(1) > div > svg > g:nth-child(4) > text');
       direct = direct ? Number.parseInt(direct.textContent.replace(/\s/g, '%'))/100 : '';
