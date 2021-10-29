@@ -21,8 +21,8 @@ class MetricaJob extends \yii\base\BaseObject implements \yii\queue\JobInterface
         $model = Domain::findOne($this->id);
         $js_path = __DIR__.'/../../nodejs/be1.js';
         $js_func = 'be1.js ' . parse_url($model->domain, PHP_URL_HOST);
-        $node = '/snap/node/5322/bin/node';
-        // $node = 'node';
+        // $node = '/snap/node/5322/bin/node';
+        $node = 'node';
         $res = json_decode(exec("cd " . dirname($js_path)." && {$node} {$js_func}"));
         // $json = '{"domain":"blogstroykin.com","traffic":"","organic":"","direct":"","traffic_season":"","project_stage":10,"profit_await":"15","evaluate_min":"75","evaluate_middle":"113","evaluate_max":"150","domain_age":"2 года 57 дней","IKS":20,"index_Y":"2132","index_G":"2630","megaindexTrustRank":"5","megaindexDomainRank":"0"}';
         // $res = json_decode($json);
