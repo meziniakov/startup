@@ -13,31 +13,31 @@ var captchaAPI = require("./config.js");
 //   })
 // )
 
-let megaindex = async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
-  await page.setViewport({
-    width: 1280,
-    height: 720,
-    deviceScaleFactor: 1,
-  });
-  let domain = process.argv[2];
-  await page.goto('https://ru.megaindex.com/info/'+domain, { waitUntil: 'domcontentloaded' });
-  await page.waitForSelector('#serp', {visible: true,});
-  const parse = page.evaluate((domain) => {
-    let traffic = document.querySelector('#serp div:nth-child(1) font');
-    if(traffic) {
-      traffic = (traffic.innerText.indexOf("K") > -1) ? Number.parseFloat(traffic.innerText.replace(/\s/g, 'K'))*1000 : Number.parseFloat(traffic.innerText);
-    } else {
-      traffic = '';
-    }
-    return traffic
-  }, (domain));
-  await browser.close();
-}
-megaindex().then((value) => {
-});
+// let megaindex = async () => {
+//   const browser = await puppeteer.launch();
+//   const page = await browser.newPage();
+//   await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
+//   await page.setViewport({
+//     width: 1280,
+//     height: 720,
+//     deviceScaleFactor: 1,
+//   });
+//   let domain = process.argv[2];
+//   await page.goto('https://ru.megaindex.com/info/'+domain, { waitUntil: 'domcontentloaded' });
+//   await page.waitForSelector('#serp', {visible: true,});
+//   const parse = page.evaluate((domain) => {
+//     let traffic = document.querySelector('#serp div:nth-child(1) font');
+//     if(traffic) {
+//       traffic = (traffic.innerText.indexOf("K") > -1) ? Number.parseFloat(traffic.innerText.replace(/\s/g, 'K'))*1000 : Number.parseFloat(traffic.innerText);
+//     } else {
+//       traffic = '';
+//     }
+//     return traffic
+//   }, (domain));
+//   await browser.close();
+// }
+// megaindex().then((value) => {
+// });
 
 let getBe1 = async () => {
   const browser = await puppeteer.launch();
@@ -163,5 +163,5 @@ let getBe1 = async () => {
   // }
 }
 
-// getBe1().then((value) => {
-// });
+getBe1().then((value) => {
+});
