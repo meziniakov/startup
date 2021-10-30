@@ -29,11 +29,14 @@ let getBe1 = async () => {
   let domain = process.argv[2];
 
   try {
-    // await page.goto('https://be1.ru/stat/'+domain);
-    await page.goto('https://pro.metrica.guru/id?domains='+domain, {
+    await page.goto('https://be1.ru/stat/'+domain, {
       waitUntil: 'load',
       timeout: 0
-  });
+    });
+    // await page.goto('https://pro.metrica.guru/id?domains='+domain, {
+    //   waitUntil: 'load',
+    //   timeout: 0
+    // });
     await page.screenshot({path: screen_path+domain+'_'+new Date().getTime()+'.jpg', type: 'jpeg', quality: 80});
     browser.close();
     process.exit();
