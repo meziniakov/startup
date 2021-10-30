@@ -59,12 +59,12 @@ let getBe1 = async () => {
     // await page.goto('https://pro.metrica.guru/id?domains='+domain)
     await page.goto('https://be1.ru/stat/'+domain, { waitUntil: 'domcontentloaded' });
     // await page.solveRecaptchas();
-    await page.waitForSelector('#similar_attendance', {visible: true,});
-    await page.waitForSelector('#set_pages_in_google', {visible: true,});
-    await page.waitForSelector('#similar_source', {visible: true,});
-    await page.waitForSelector('#set_iks', {visible: true,});
-    await page.waitForSelector('#set_trust_rank', {visible: true,});
-    await page.waitForSelector('#set_domain_rank', {visible: true,});
+    await page.waitForSelector('#similar_attendance', {visible: true, timeout: 2000 });
+    await page.waitForSelector('#set_pages_in_google', {visible: true, timeout: 2000 });
+    await page.waitForSelector('#similar_source', {visible: true, timeout: 2000 });
+    await page.waitForSelector('#set_iks', {visible: true, timeout: 2000 });
+    await page.waitForSelector('#set_trust_rank', {visible: true, timeout: 2000 });
+    await page.waitForSelector('#set_domain_rank', {visible: true, timeout: 2000 });
     // const element = await page.$('.wrapper_line_chart');        // объявляем переменную с ElementHandle
     // await element.screenshot({path: chart_path+domain+'_chart.jpeg', type: 'jpeg', quality: 80});
 
