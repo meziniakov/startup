@@ -58,6 +58,7 @@ let getBe1 = async () => {
     try {
     // await page.goto('http://'+domain);
     // await page.goto('https://pro.metrica.guru/id?domains='+domain)
+    await page.setDefaultNavigationTimeout(0);
     await page.goto('https://be1.ru/stat/'+domain, {waitUntil: 'networkidle0'});
     await page.solveRecaptchas();
     // await Promise.all([
