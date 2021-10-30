@@ -60,7 +60,7 @@ let getBe1 = async () => {
     // await page.screenshot({path: screen_path+domain+'.jpeg', type: 'jpeg', quality: 60});
     // await page.goto('https://pro.metrica.guru/id?domains='+domain)
     await page.goto('https://be1.ru/stat/'+domain, { waitUntil: 'domcontentloaded' });
-    // await page.solveRecaptchas();
+    await page.solveRecaptchas();
     await page.waitForSelector('#similar_attendance', {visible: true, timeout: 2000 });
     await page.waitForSelector('#set_pages_in_google', {visible: true, timeout: 2000 });
     await page.waitForSelector('#similar_source', {visible: true, timeout: 2000 });
