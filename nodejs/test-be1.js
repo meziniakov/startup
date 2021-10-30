@@ -30,7 +30,10 @@ let getBe1 = async () => {
 
   try {
     // await page.goto('https://be1.ru/stat/'+domain);
-    await page.goto('https://pro.metrica.guru/id?domains='+domain);
+    await page.goto('https://pro.metrica.guru/id?domains='+domain, {
+      waitUntil: 'load',
+      timeout: 0
+  });
     await page.screenshot({path: screen_path+domain+'_'+new Date().getTime()+'.jpg', type: 'jpeg', quality: 80});
     browser.close();
     process.exit();
