@@ -29,7 +29,11 @@ let getBe1 = async () => {
   let domain = process.argv[2];
 
   try {
-    await page.goto('https://be1.ru/stat/'+domain, {
+    // await page.goto('https://be1.ru/stat/'+domain, {
+    //   waitUntil: 'load',
+    //   timeout: 0
+    // });
+    await page.goto('https://ya.ru', {
       waitUntil: 'load',
       timeout: 0
     });
