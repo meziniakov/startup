@@ -59,47 +59,20 @@ let getBe1 = async () => {
     // await page.goto('http://'+domain);
     // await page.screenshot({path: screen_path+domain+'.jpeg', type: 'jpeg', quality: 60});
     // await page.goto('https://pro.metrica.guru/id?domains='+domain)
-    await page.goto('https://be1.ru/stat/'+domain, { waitUntil: 'domcontentloaded' });
+    await page.goto('https://be1.ru/stat/'+domain, {waitUntil: 'networkidle0'});
     await page.solveRecaptchas();
-    await page.waitForSelector('#similar_attendance', {visible: true, timeout: 2000 });
-    await page.waitForSelector('#set_pages_in_google', {visible: true, timeout: 2000 });
-    await page.waitForSelector('#similar_source', {visible: true, timeout: 2000 });
-    await page.waitForSelector('#set_iks', {visible: true, timeout: 2000 });
-    await page.waitForSelector('#set_trust_rank', {visible: true, timeout: 2000 });
-    await page.waitForSelector('#set_domain_rank', {visible: true, timeout: 2000 });
+    // await Promise.all([
+    //   page.waitForNavigation(),
+    //   page.click(`#recaptcha-demo-submit`)
+    // ])
     // const element = await page.$('.wrapper_line_chart');        // объявляем переменную с ElementHandle
     // await element.screenshot({path: chart_path+domain+'_chart.jpeg', type: 'jpeg', quality: 80});
 
     const be1 = await page.evaluate((domain) => {
       let traffic = document.querySelector('#similar_attendance text:nth-child(2)');
-      traffic = traffic ? Number.parseInt(traffic.textContent.replace(/\s/g, '')) : '';
+      // traffic = traffic ? Number.parseInt(traffic.textContent.replace(/\s/g, '')) : '';
+      traffic = Number.parseInt(traffic.textContent.replace(/\s/g, ''));
       
-      // if(traffic === '') {
-      //   let megaindex = async () => {
-      //     const browser = await puppeteer.launch();
-      //     const page = await browser.newPage();
-      //     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
-      //     await page.setViewport({
-      //       width: 1280,
-      //       height: 720,
-      //       deviceScaleFactor: 1,
-      //     });
-      //     page.goto('https://ru.megaindex.com/info/'+domain, { waitUntil: 'domcontentloaded' });
-      //     page.waitForSelector('#serp', {visible: true,});
-      //     const parse = page.evaluate((domain) => {
-      //       let traffic = document.querySelector('#serp div:nth-child(1) font');
-      //       if(traffic) {
-      //         traffic = (traffic.innerText.indexOf("K") > -1) ? Number.parseFloat(traffic.innerText.replace(/\s/g, 'K'))*1000 : Number.parseFloat(traffic.innerText);
-      //       } else {
-      //         traffic = '';
-      //       }
-      //       return traffic
-      //     }, (domain));
-      //     browser.close();
-      //   }
-      // traffic = megaindex();
-      // }
-
       let direct = document.querySelector('#similar_source > div > div:nth-child(1) > div > svg > g:nth-child(4) > text');
       direct = direct ? Number.parseInt(direct.textContent.replace(/\s/g, '%'))/100 : '';
       
