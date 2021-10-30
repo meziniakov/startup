@@ -1,8 +1,8 @@
 // const puppeteer = require('puppeteer');
 const puppeteer = require('puppeteer-extra');
 var captchaAPI = require("./config.js");
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-puppeteer.use(StealthPlugin());
+// const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+// puppeteer.use(StealthPlugin());
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 
 puppeteer.use(
