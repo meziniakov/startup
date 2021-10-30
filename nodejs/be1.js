@@ -1,17 +1,19 @@
-const puppeteer = require('puppeteer');
+// const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
 var captchaAPI = require("./config.js");
-// const puppeteer = require('puppeteer-extra');
-// const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+puppeteer.use(StealthPlugin());
+const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 
-// puppeteer.use(
-//   RecaptchaPlugin({
-//     provider: {
-//       id: '2captcha',
-//       token: captchaAPI // REPLACE THIS WITH YOUR OWN 2CAPTCHA API KEY ⚡
-//     },
-//     visualFeedback: true // colorize reCAPTCHAs (violet = detected, green = solved)
-//   })
-// )
+puppeteer.use(
+  RecaptchaPlugin({
+    provider: {
+      id: '2captcha',
+      token: captchaAPI // REPLACE THIS WITH YOUR OWN 2CAPTCHA API KEY ⚡
+    },
+    visualFeedback: true // colorize reCAPTCHAs (violet = detected, green = solved)
+  })
+)
 
 // let megaindex = async () => {
 //   const browser = await puppeteer.launch();
