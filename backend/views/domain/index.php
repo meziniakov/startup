@@ -14,10 +14,12 @@ use yii\grid\CheckboxColumn;
 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+            <?php Pjax::begin()?>
 <div class="domain-index">
     <div class="card">
         <div class="card-header">
             <?php echo Html::a('Добавить домен', ['create'], ['class' => 'btn btn-success']) ?>
+            <?php echo Html::a(Yii::t('backend', 'Парсинг'), null, ['class' => 'btn btn-warning', 'id' => 'parsing']) ?>
             <?php if(Yii::$app->controller->action->id === 'blacklist'):?>
                 <?php echo Html::a(Yii::t('backend', 'Вернуть обратно'), null, ['class' => 'btn btn-primary', 'id' => 'unblacklist']) ?>
             <?php else:?>
@@ -26,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
         <div class="card-body p-0">
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-            <?php Pjax::begin()?>
             <?php echo GridView::widget([
                 'id' => 'grid',
                 'layout' => "{items}\n{pager}",
@@ -102,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '{start} {delete}'],
                 ],
             ]); ?>
-    <?php 
+    <?php
         $this->registerJs('
           $(document).ready(function(){
             $(\'#blacklist\').click(function(){
@@ -124,6 +125,20 @@ $this->params['breadcrumbs'][] = $this->title;
                   data : {id: id},
                   success : function() {
                     $(this).closest(\'tr\').remove(); //удаление строки
+                  }
+              });
+            });
+            $(\'#parsing\').click(function(){
+              var id = $(\'#grid\').yiiGridView(\'getSelectedRows\');
+              var count = $(\':checkbox:checked\').length - 1;
+              $.ajax({
+                  type: \'POST\',
+                  url : \'/domain/multiple-parsing\',
+                  data : {id: id},
+                  success : function() {
+                    $(\':checkbox:checked\').css(\'color\', \'red\');
+                    $(\'#grid input:checkbox\').prop(\'checked\', false);
+                    f12notification.success(\' Доменов успешно отправлено на обработку: \'+count);
                   }
               });
             });

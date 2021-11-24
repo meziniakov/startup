@@ -2,7 +2,9 @@
 
 namespace backend\models;
 
+use floor12\notification\Notification;
 use Yii;
+use yii\web\View;
 
 /**
  * This is the model class for table "domain".
@@ -30,12 +32,34 @@ use Yii;
  */
 class Domain extends \yii\db\ActiveRecord
 {
+    const DOMAIN_PARSED = 'domain_parsed';
+
+    public function init()
+    {
+        $this->on(Domain::DOMAIN_PARSED, function(){
+            Yii::$app->session->setFlash('alert', [
+                'options' => ['class' => 'alert-danger'],
+                'body' => "Text"
+            ]);
+        });
+        parent::init();
+    }
+
+    public function domainParsed()
+    {
+        $this->trigger(Domain::DOMAIN_PARSED);
+    }
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'domain';
+    }
+
+    public function notification()
+    {
+        return Notification::info('The form is loading...');
     }
 
     /**
@@ -95,6 +119,14 @@ class Domain extends \yii\db\ActiveRecord
         return $this->hasMany(Project::class, ['id' => 'project_id'])
             ->viaTable('{{%domain_project}}', ['domain_id' => 'id']);
     }
+
+    // static public function flash()
+    // {
+    //     Yii::$app->session->setFlash('alert', [
+    //         'options' => ['class' => 'alert-success'],
+    //         'body' => 'Запись сохранена. '
+    //     ]);
+    // }
 
     // public function getReviews()
     // {

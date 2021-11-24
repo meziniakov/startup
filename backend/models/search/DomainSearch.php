@@ -45,6 +45,7 @@ class DomainSearch extends Domain
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => ['pageSize' => 100],
         ]);
 
         if (!($this->load($params) && $this->validate())) {

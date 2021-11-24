@@ -58,15 +58,16 @@ let getBe1 = async () => {
     try {
     // await page.goto('http://'+domain);
     // await page.goto('https://pro.metrica.guru/id?domains='+domain)
-    await page.goto('https://be1.ru/stat/'+domain, {waitUntil: 'load', timeout: 0});
+    await page.goto('https://be1.ru/stat/'+domain, {waitUntil: 'load'});
     await page.solveRecaptchas();
+    const date = new Date();
     // await Promise.all([
       //   page.waitForNavigation(),
       //   page.click(`#recaptcha-demo-submit`)
       // ])
       // const element = await page.$('.wrapper_line_chart');        // объявляем переменную с ElementHandle
       // await element.screenshot({path: chart_path+domain+'_chart.jpeg', type: 'jpeg', quality: 80});
-      await page.screenshot({path: screen_path+domain+'.jpeg', type: 'jpeg', quality: 60});
+      await page.screenshot({path: screen_path+domain+`_${date.getTime()}_.jpeg`, type: 'jpeg', quality: 60});
 
     const be1 = await page.evaluate((domain) => {
       let traffic = document.querySelector('#similar_attendance text:nth-child(2)');

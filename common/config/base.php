@@ -11,6 +11,14 @@ $config = [
         '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
+        'urlManager' => [
+            'class' => yii\web\UrlManager::class,
+            'enablePrettyUrl' => true,
+            'scriptUrl' => Yii::getAlias('@backendUrl'),
+        ],    
+        'session' => [ 
+            'class' => 'yii\web\Session'
+        ],
         'authManager' => [
             'class' => yii\rbac\DbManager::class,
             'itemTable' => '{{%rbac_auth_item}}',
@@ -126,7 +134,31 @@ $config = [
             // 'class' => yii\queue\file\Queue::class,
             'class' => \yii\queue\db\Queue::class,
             // 'path' => '@console/runtime/queue',
-            // 'as log' => \yii\queue\LogBehavior::class,
+            'as log' => \yii\queue\LogBehavior::class,
+            // 'on afterExec' => function ($event) {
+            //     $afterExecAlert = function($event) {
+            //         throw new \Exception($event);
+            //     };
+            //     Yii::$app->queue->on(Queue::EVENT_AFTER_PUSH, $afterExecAlert);
+            // },
+            'on '.yii\queue\Queue::EVENT_BEFORE_EXEC => function($event) {
+                // throw new \Exception('oops');
+                // $domain = new Domain;
+                // $domain->domainParsed();
+                // $->redirect(\yii\helpers\Url::toRoute('domain/event'));
+                // echo \Yii::$app->getUrlManager()->createAbsoluteUrl('test/test');
+                // Yii::$app->controllerNamespace = "backend\controllers";
+                // Yii::$app->runAction('domain/view', ['id' => 296]);
+                // Yii::$app->cache->set('k', 'g', );
+                // $cont = new DomainController();
+                // $cont->redirect(['domain/index']);
+                // $this->redirect(['domain/index']);
+                // Yii::$app->session->get('alert');
+                // Yii::$app->controllerNamespace = 'backend\controllers';
+                // Yii::$app->runAction('domain/index');
+                // DomainController::actionIndex;
+                // print_r($event);
+            },
             'db' => 'db',
             'tableName' => '{{%queue}}', // Имя таблицы
             'channel' => 'default', // Queue channel key

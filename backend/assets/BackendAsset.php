@@ -12,7 +12,7 @@ use common\assets\AdminLte;
 use common\assets\Html5shiv;
 use yii\web\AssetBundle;
 use yii\web\YiiAsset;
-use rmrevin\yii\fontawesome\NpmFreeAssetBundle;
+use floor12\notification\NotificationAsset;
 
 class BackendAsset extends AssetBundle
 {
@@ -50,5 +50,6 @@ class BackendAsset extends AssetBundle
         YiiAsset::class,
         AdminLte::class,
         Html5shiv::class,
+        NotificationAsset::class
     ];
 }
