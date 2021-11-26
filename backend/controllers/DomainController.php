@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\jobs\Be1Job;
+use backend\jobs\MegaindexJob;
 use backend\jobs\MetricaJob;
 use Yii;
 use backend\models\Domain;
@@ -281,7 +282,7 @@ class DomainController extends Controller
             $count = 0;
             foreach($ids as $id) {
                 $model = Domain::findOne($id);
-                if (Yii::$app->queue->push(new MetricaJob([
+                if (Yii::$app->queue->push(new MegaindexJob([
                     'id' => $model->id,
                 ]))) {
                     Html::script("f12notification.error('Registration failed.')");
