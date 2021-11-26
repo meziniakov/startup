@@ -32,10 +32,13 @@ app.get("/api/test/:domain", async function (req, res) {
             // console.log('Получил домен: '+url);
             // const domain = `https://be1.ru/stat/${new URL(urls[link]).hostname}`;
             // const url = urls[link];
-            const domain = `https://be1.ru/stat/${url.replace('www.', '')}`;
+            const domain = url.replace('www.', '');
+            // const domain = `https://be1.ru/stat/${url.replace('www.', '')}`;
+            // const domain = `https://pro.metrica.guru/id?domains=${url.replace('www.', '')}`;
+            const parse_url = `https://ru.megaindex.com/info/${domain}`;
             // const domain = `https://lasovtsov.ru/russianfood.html`;
             // scrapedData[urls[link]] = await pageScraper.scraper(browser, domain);
-            scrapedData[url] = await pageScraper.scraper(browser, domain);
+            scrapedData[domain] = await pageScraper.scraper(browser, parse_url);
         // }
         await browser.close();
         resolve(scrapedData);

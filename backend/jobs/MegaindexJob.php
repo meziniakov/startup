@@ -8,7 +8,7 @@ use backend\models\DomainAPI;
 /**
  * Class MetricaJob.
  */
-class MetricaJob extends \yii\base\BaseObject implements \yii\queue\JobInterface
+class MegaindexJob extends \yii\base\BaseObject implements \yii\queue\JobInterface
 {
     // public $domain;
     public $id;

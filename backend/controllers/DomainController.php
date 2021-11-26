@@ -281,7 +281,7 @@ class DomainController extends Controller
             $count = 0;
             foreach($ids as $id) {
                 $model = Domain::findOne($id);
-                if (Yii::$app->queue->push(new Be1Job([
+                if (Yii::$app->queue->push(new MetricaJob([
                     'id' => $model->id,
                 ]))) {
                     Html::script("f12notification.error('Registration failed.')");
