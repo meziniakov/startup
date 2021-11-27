@@ -136,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   url : \'/domain/multiple-parsing\',
                   data : {id: id},
                   success : function() {
-                    $(\':checkbox:checked\').css(\'color\', \'red\');
+                    $(\'#grid :checkbox:checked\').css(\'color\', \'red\');
                     $(\'#grid input:checkbox\').prop(\'checked\', false);
                     f12notification.success(\' Доменов успешно отправлено на обработку: \'+count);
                   }
