@@ -11,7 +11,7 @@ const chromeOptions = {
 async function startBrowser(){
     let browser;
     try {
-        console.log("Opening the browser......");
+        console.log("Открываю браузер......");
         browser = await puppeteer.launch(chromeOptions);
     } catch (err) {
         console.log("Could not create a browser instance => : ", err);

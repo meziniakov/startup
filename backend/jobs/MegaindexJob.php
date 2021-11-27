@@ -33,7 +33,7 @@ class MegaindexJob extends \yii\base\BaseObject implements \yii\queue\JobInterfa
         $model->evaluate_middle = $json[$domain]['evaluate_middle'];
         $model->evaluate_max = $json[$domain]['evaluate_max'];
         // $model->domain_age = $json[$domain]['domain_age'];
-        // $model->IKS = $json[$domain]['IKS'];
+        $model->IKS = $json[$domain]['IKS'];
         // $model->index_Y = $json[$domain]['index_Y'];
         // $model->index_G = $json[$domain]['index_G'];
         $model->CMS = "Wordpress";
