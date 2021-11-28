@@ -4,7 +4,8 @@ const chromeOptions = {
     headless:true,
     slowMo:10,
     defaultViewport: null,
-    args: ["--disable-setuid-sandbox"],
+    args: ["--disable-setuid-sandbox",
+            '--proxy-server=176.9.119.170:3128'],
     'ignoreHTTPSErrors': true
   };
 

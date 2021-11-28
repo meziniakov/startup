@@ -84,7 +84,9 @@ const scraperObject = {
                 console.log(`Перехожу по адресу: ${webmaster}`);
                 await page2.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
                 await page2.goto(webmaster, {waitUntil: 'domcontentloaded'});
-                await page2.waitForSelector('.achievement__info');
+                console.log('Ожидаю селектор: .achievement_type_sqi .achievement__name');
+                await page2.waitForSelector('.achievement_type_sqi .achievement__name');
+                console.log('Копирую дааные селектора: .achievement_type_sqi .achievement__name');
                 dataObj['IKS'] = await page2.$eval('.achievement_type_sqi .achievement__name', text => text.textContent.replace(/[^0-9/.]/g,""));
                 console.log('IKS:' + dataObj['IKS']);
                 
@@ -92,7 +94,7 @@ const scraperObject = {
                 await page2.close();
                 resolve(dataObj);
             } catch (err) {
-                console.log("Could not resolve the browser instance => ", err);
+                console.log("Ошибка => ", err);
             }
         })
         // let currentPageData = await parseBe1(url);
