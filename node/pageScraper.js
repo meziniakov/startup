@@ -80,13 +80,13 @@ const scraperObject = {
             // await element.screenshot({path: screen_path, type: 'jpeg', quality: 80});
             // dataObj['visrep_site_counters'] = screen_path;
 
-            await page.close();
             console.log(`Перехожу по адресу: ${webmaster}`);
             await page2.goto(webmaster, {waitUntil: 'networkidle2'});
-            await page.waitForSelector('.achievement_type_sqi .achievement__name');
+            await page2.waitForSelector('.achievement__info');
             dataObj['IKS'] = await page2.$eval('.achievement_type_sqi .achievement__name', text => text.textContent.replace(/[^0-9/.]/g,""));
             console.log('IKS:' + dataObj['IKS']);
-
+            
+            await page.close();
             await page2.close();
             resolve(dataObj);
         })
