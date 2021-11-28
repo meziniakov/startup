@@ -83,6 +83,7 @@ const scraperObject = {
             await page.close();
             console.log(`Перехожу по адресу: ${webmaster}`);
             await page2.goto(webmaster, {waitUntil: 'networkidle2'});
+            await page.waitForSelector('.achievement_type_sqi .achievement__name');
             dataObj['IKS'] = await page2.$eval('.achievement_type_sqi .achievement__name', text => text.textContent.replace(/[^0-9/.]/g,""));
             console.log('IKS:' + dataObj['IKS']);
 

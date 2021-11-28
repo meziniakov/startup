@@ -130,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
             });
             $(\'#parsing\').click(function(){
               var id = $(\'#grid\').yiiGridView(\'getSelectedRows\');
-              var count = $(\'#grid :checkbox:checked\').length -1;
+              var count = $(\'#grid :checkbox:checked\').length;
               $.ajax({
                   type: \'POST\',
                   url : \'/domain/multiple-parsing\',
