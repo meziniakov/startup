@@ -22,8 +22,6 @@ const scraperObject = {
             const megaindex = `https://ru.megaindex.com/info/${domain}`;
             console.log(`Перехожу по адресу: ${megaindex}`);
             await page.goto(megaindex, {waitUntil: 'networkidle2'});
-            console.log(`Перехожу по адресу: ${webmaster}`);
-            await page2.goto(webmaster, {waitUntil: 'networkidle2'});
             console.log(`Ожидаю загрузки селектора: #serp .count`);
             await page.waitForSelector('#serp .count');
             // await page.waitForTimeout(5000);
@@ -62,9 +60,6 @@ const scraperObject = {
 
             // dataObj['domain_age'] = await page.$eval('#set_vozrast', text => text ? text.textContent : '');
       
-            dataObj['IKS'] = await page2.$eval('.achievement_type_sqi .achievement__name', text => text.textContent.replace(/[^0-9/.]/g,""));
-            console.log('IKS:' + dataObj['IKS']);
-
             // let index_Y = await page.$eval('#set_pages_in_yandex a', text => text.textContent);
             // dataObj['index_Y'] = index_Y ? index_Y : '';
       
@@ -86,6 +81,11 @@ const scraperObject = {
             // dataObj['visrep_site_counters'] = screen_path;
 
             await page.close();
+            console.log(`Перехожу по адресу: ${webmaster}`);
+            await page2.goto(webmaster, {waitUntil: 'networkidle2'});
+            dataObj['IKS'] = await page2.$eval('.achievement_type_sqi .achievement__name', text => text.textContent.replace(/[^0-9/.]/g,""));
+            console.log('IKS:' + dataObj['IKS']);
+
             await page2.close();
             resolve(dataObj);
         })

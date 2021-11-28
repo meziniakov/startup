@@ -20,7 +20,7 @@ class MegaindexJob extends \yii\base\BaseObject implements \yii\queue\JobInterfa
     public function execute($queue)
     {
         $model = Domain::findOne($this->id);
-        $domain = parse_url($model->domain, PHP_URL_HOST);
+        $domain = parse_url(strtr($model->domain, ['//www.'=>'//']), PHP_URL_HOST);
         $domainAPI = new DomainAPI();
         $json = $domainAPI->get($domain);
         $model->traffic = $json[$domain]['traffic'];
