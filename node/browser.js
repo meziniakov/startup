@@ -5,7 +5,9 @@ const chromeOptions = {
     slowMo:10,
     defaultViewport: null,
     args: ["--disable-setuid-sandbox",
-            '--proxy-server=176.9.119.170:3128'],
+    '--window-size=1920,1080',
+    // '--proxy-server=https://64.235.204.107:3128'
+        ],
     'ignoreHTTPSErrors': true
   };
 
