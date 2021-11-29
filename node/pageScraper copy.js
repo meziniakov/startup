@@ -1,3 +1,33 @@
+                // const element = await page.$('#set_visrep_site_counters_yandex');        // объявляем переменную с ElementHandle
+                let page2 = await browser.newPage();
+                await page2.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36');
+                console.log(`Перехожу по адресу: ${domain}`);
+                let date = new Date().getTime();
+                let screen_path = `../storage/web/screen/`;
+                let screen_name = `${domain}_${date}.jpeg`;
+                await page2.goto('http://'+domain, {waitUntil: 'domcontentloaded'});
+                await page2.screenshot({path: screen_path+screen_name, type: 'jpeg', quality: 70});
+                // await element.screenshot({path: screen_path, type: 'jpeg', quality: 80});
+                // dataObj['visrep_site_counters'] = screen_path;
+                dataObj['imageUrl'] = screen_name;
+
+                // await page2.goto(webmaster, {waitUntil: 'domcontentloaded'});
+                // await page2.screenshot({path: screen_path+'.jpg', type: 'jpeg', quality: 80});
+                // await page2.solveRecaptchas();
+                // await Promise.all([
+                //   page2.waitForNavigation(),
+                //   page2.click(`.CheckboxCaptcha-Anchor input[type=submit]`)
+                //   // document.querySelector('.CheckboxCaptcha-Anchor input[type=submit]').click()
+                // ])
+                // await page2.screenshot({path: screen_path+'_.jpg', type: 'jpeg', quality: 80});
+                // console.log('Ожидаю селектор: .achievement_type_sqi .achievement__name');
+                // await page2.waitForSelector('.achievement_type_sqi .achievement__name');
+                // console.log('Копирую дааные селектора: .achievement_type_sqi .achievement__name');
+                // dataObj['IKS'] = await page2.$eval('.achievement_type_sqi .achievement__name', text => text.textContent.replace(/[^0-9/.]/g,""));
+                // console.log('IKS:' + dataObj['IKS']);
+                // await page2.close();
+
+
 const scraperObject = {
     async scraper(browser, domain) {
         // let page = await browser.newPage();
