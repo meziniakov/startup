@@ -71,10 +71,15 @@ const scraperObject = {
         
                 // let megaindexDomainRank = await page.$eval('#set_domain_rank', text => text.innerText);
                 // dataObj['megaindexDomainRank'] = megaindexDomainRank ? megaindexDomainRank : '';
-
-                // dataObj['imageUrl'] = await page.$eval('#set_screenshot_desktop img', img => img.src);
+                console.log('перехожу http://'+domain);
+                await page.goto('http://'+domain, {waitUntil: 'load'});
+                const date = new Date();
+                let screen = `${domain}_${date.getTime()}.jpeg`;
+                await page.screenshot({path: `../storage/web/screen/${screen}`, fullPage: false });
+                dataObj['imageUrl'] = screen;
                 
                 await page.close();
+                console.log('Done!');
                 resolve(dataObj);
             } catch (err) {
                 console.log("Ошибка => ", err);
