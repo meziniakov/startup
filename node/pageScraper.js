@@ -32,7 +32,7 @@ const scraperObject = {
                     } else if(traffic_organic.textContent.includes('K')) {
                         return traffic_organic.textContent.replace(/[^0-9.,\s]/g,"")*1000;
                     } else {
-                        return traffic_organic.textContent;
+                        return parseInt(traffic_organic.textContent);
                     }
                 });
                 dataObj['traffic'] = traffic ? traffic.toFixed(0) : '';
@@ -77,7 +77,7 @@ const scraperObject = {
                 let screen = `${domain}_${date.getTime()}.jpeg`;
                 await page.screenshot({path: `../storage/web/screen/${screen}`, fullPage: false });
                 dataObj['imageUrl'] = screen;
-                
+
                 await page.close();
                 console.log('Done!');
                 resolve(dataObj);
