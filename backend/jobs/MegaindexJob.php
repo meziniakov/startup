@@ -36,7 +36,7 @@ class MegaindexJob extends \yii\base\BaseObject implements \yii\queue\JobInterfa
         // $model->IKS = $json[$domain]['IKS'];
         // $model->index_Y = $json[$domain]['index_Y'];
         // $model->index_G = $json[$domain]['index_G'];
-        $model->screen = $json[$domain]['imageUrl'];
+        $model->screen = $json[$domain]['imageUrl'] ? $json[$domain]['imageUrl'] : '';
         // $model->CMS = "Wordpress";
         $model->save();
     }
