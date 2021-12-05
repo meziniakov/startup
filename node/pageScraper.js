@@ -71,20 +71,24 @@ const scraperObject = {
         
                 // let megaindexDomainRank = await page.$eval('#set_domain_rank', text => text.innerText);
                 // dataObj['megaindexDomainRank'] = megaindexDomainRank ? megaindexDomainRank : '';
-                try {
-                    console.log('перехожу http://'+domain);
-                    await page.goto('http://'+domain, {waitUntil: 'load'});
-                    const date = new Date();
-                    let screen = `${domain}_${date.getTime()}.jpeg`;
-                    await page.screenshot({path: `../storage/web/screen/${screen}`, fullPage: false });
-                    dataObj['imageUrl'] = screen;
-                } catch(error) {
-                    console.log(error);
-                } finally {
-                    await page.close();
-                    console.log('Done!');
-                    resolve(dataObj);
-                }
+                await page.close();
+                console.log('Done!');
+                resolve(dataObj);
+
+                // try {
+                //     console.log('перехожу http://'+domain);
+                //     await page.goto('http://'+domain, {waitUntil: 'load'});
+                //     const date = new Date();
+                //     let screen = `${domain}_${date.getTime()}.jpeg`;
+                //     await page.screenshot({path: `../storage/web/screen/${screen}`, fullPage: false });
+                //     dataObj['imageUrl'] = screen;
+                // } catch(error) {
+                //     console.log(error);
+                // } finally {
+                //     await page.close();
+                //     console.log('Done!');
+                //     resolve(dataObj);
+                // }
             } catch (err) {
                 console.log("Ошибка => ", err);
             }
